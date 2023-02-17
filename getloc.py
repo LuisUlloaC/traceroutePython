@@ -6,18 +6,18 @@ def getMyLoc():
     """
     this return: IP , lon , lat , city
     """
-    url = 'http://ip-api.com/json/'
+    url = 'https://ipapi.co/json'
     response = requests.get(url)
     data = response.json()
     try:
-        myIP = data['query']
-        lon = data['lon']
-        lat = data['lat']
-        city = data['city']
+        myIP = data['ip']
+        lat = data.get('latitude')
+        lon = data.get('longitude')
+        city = str(data.get('city'))
     except KeyError as e:
-        print(f'Error: {e} Not Found man')
+        print(f'Error on my: {e} Not Found man')
         exit()
-    
+
     return (myIP , (lon, lat) , city)
 
 def getTargetLoc(IP):
@@ -29,13 +29,13 @@ def getTargetLoc(IP):
     response = requests.get(url)
     data = response.json()
     try:
-        lon = data['lon']
-        lat = data['lat']
-        city = data['city']
+        lon = data['longitude']
+        lat = data.get('latitude')
+        city = str(data.get('city'))
     except KeyError as e:
-        print(f'Error: {e} Not Found man')
+        print(f'Error on target: {e} Not Found man')
         exit()
-    
+
     return (IP , (lon, lat), city)
 
 def getListLoc(ipList):
@@ -58,11 +58,12 @@ def getListLoc(ipList):
         except KeyError:
             pass
 
-        lon = data['lon']
-        lat = data['lat']
+
+        lat = data.get('latitude')
+        lon = data.get('longitude')
         if lon == None or lat == None:
             continue
-        city = data['city']
+        city = str(data.get('city'))
 
         List.append((ipAddress, (lon, lat), city))
 
