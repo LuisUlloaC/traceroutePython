@@ -6,13 +6,13 @@ def getMyLoc():
     """
     this return: IP , lon , lat , city
     """
-    url = 'https://ipapi.co/json'
+    url = 'http://ip-api.com/json/'
     response = requests.get(url)
     data = response.json()
     try:
-        myIP = data['ip']
-        lon = data['longitude']
-        lat = data['latitude']
+        myIP = data['query']
+        lon = data['lon']
+        lat = data['lat']
         city = data['city']
     except KeyError as e:
         print(f'Error: {e} Not Found man')
@@ -29,8 +29,8 @@ def getTargetLoc(IP):
     response = requests.get(url)
     data = response.json()
     try:
-        lon = data['longitude']
-        lat = data['latitude']
+        lon = data['lon']
+        lat = data['lat']
         city = data['city']
     except KeyError as e:
         print(f'Error: {e} Not Found man')
@@ -58,8 +58,8 @@ def getListLoc(ipList):
         except KeyError:
             pass
 
-        lon = data['longitude']
-        lat = data['latitude']
+        lon = data['lon']
+        lat = data['lat']
         if lon == None or lat == None:
             continue
         city = data['city']
